@@ -2,14 +2,16 @@ import graphene
 from app.typedefs.UserType import UserType
 from app.model import UserModel
 
+
 class UpdateUser(graphene.Mutation):
-   class Arguments:
-       userId = graphene.String(required=True)
-       name = graphene.String()
-       email = graphene.String()
-       
-   user = graphene.Field(lambda: UserType)   
-   def mutate(self, info, **kwargs):
+    class Arguments:
+        userId = graphene.String(required=True)
+        name = graphene.String()
+        email = graphene.String()
+
+    user = graphene.Field(lambda: UserType)
+
+    def mutate(self, info, **kwargs):
         user = UserModel.get(kwargs.get('userId'))
         name = kwargs.get('name')
         email = kwargs.get('email')
