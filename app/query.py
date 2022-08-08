@@ -1,14 +1,21 @@
 import graphene
-from graphene import relay
-from app.user_model import UserModel
-from app.types.user import User
+from app.model import  UserModel
+from app.typedefs.UserType import UserType
+
+from flask import jsonify
 
 class UserQuery(graphene.ObjectType):
-   node = relay.Node.Field()
+    hello = graphene.String(name=graphene.String(default_value="friend"))
+    getUser = graphene.Field(UserType, userId=graphene.String(required=True))
+    getAllUsers = graphene.List(UserType)
+    user = graphene.Field(UserType)
+    
+    def resolve_hello(root, info, name):
+        return f'Hello {name}!'
 
-   users = graphene.List(lambda: UserModel, id=graphene.String())
-
-   def resolve_users(self, info, id=None):
-       if id:
-           return UserModel.get(id=id)
-       return list(UserModel.scan())
+    
+    def resolve_getUser(parent, info, userId):
+        return UserModel.get(userId)
+    
+    def resolve_getAllUsers(self, args):
+        return list(UserModel.scan())

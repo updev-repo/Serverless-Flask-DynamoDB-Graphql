@@ -10,7 +10,7 @@ plugins:
 custom:
   tableName: 'users-table-${self:provider.stage}'
   wsgi:
-    app: app.index.app
+    app: app.app
     packRequirements: false
   pythonRequirements:
     dockerizePip: non-linux
