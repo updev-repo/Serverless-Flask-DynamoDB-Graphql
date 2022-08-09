@@ -1,0 +1,34 @@
+# Serverless file This is the file configured for serverless
+
+plugins:
+  - serverless-offline-python
+  - serverless-wsgi
+  - serverless-python-requirements
+  - serverless-wsgi
+  - serverless-python-requirements
+service: harsh-test
+  
+provider:
+  name: aws
+  runtime: python 3.9
+
+
+functions:
+  app:
+    handler: wsgi.handler # Path to lambda handler 
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
+
+  
+custom:
+  wsgi:
+    app: main.app
+  serverless-offline:
+    noPrependStageInUrl: true
+  dynamodb:
+    start:
+      migrate: true
+    stages:
+      - dev
+

@@ -1,0 +1,83 @@
+query GetAllUsers {
+  allUsers{
+    edges {
+      node {
+        id
+        name
+        password
+      }
+    }
+  }
+}
+
+query GetAllTodo {
+  allTodo{
+    edges{
+      node{
+        id
+        description
+        dueDate
+        completed
+      }
+    }
+  }
+}
+
+
+query GetTodo {
+  todoSingle(input:1) {
+    id
+    description
+  }
+}
+
+query GetUser {
+  usersSingle(input:1) {
+    id
+    name
+  }
+}
+
+mutation createTodo {
+	createTodo(description:"A new name",completed:true){
+    todo{
+      description
+      completed
+    }
+  }   
+}
+
+
+mutation updateTodo {
+	updateTodo(id:5, description:"A new todo",completed:false){
+    todo{
+      description
+      completed
+    }
+  }   
+}
+
+mutation deleteTodo {
+	deleteTodo(id:4){
+    todo{
+      id
+    }
+  }
+}
+
+
+mutation createUser($name: String = "madi", $password: String = "password") {
+	createUser(name: $name, password: $password) {
+    user{
+      name
+      password
+    }
+  }   
+}
+
+mutation loginAuth($name: String = "mahadi", $password: String = "password"){
+    auth(name: $name, password: $password) {
+        accessToken
+        refreshToken
+    }
+}
